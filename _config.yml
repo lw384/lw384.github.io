@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Blog
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+author: lw384
 language: en
 timezone: ''
 
@@ -103,7 +103,7 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: 'git'
+  type: git
   repo:
-    github: https://github.com/lw384/lw384.github.io.git
+    github: git@github.com:lw384/lw384.github.io.git
   branch: main

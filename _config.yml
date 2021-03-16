@@ -98,7 +98,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: typography
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -107,3 +107,8 @@ deploy:
   repo:
     github: git@github.com:lw384/lw384.github.io.git
   branch: main
+
+  prism_plugin:
+    mode: 'preprocess' # realtime/preprocess
+    theme: 'default'
+    line_number: false # default false

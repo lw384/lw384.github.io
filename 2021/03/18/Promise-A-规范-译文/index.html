@@ -1,29 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
-  </script>
-<meta name="description" content="Promises&#x2F;A+一个开源的、健全的、可操作的JavaScript Promises规范，由开发者制定，为其他开发者提供参考 Promise代表一个异步操作的最终结果。与之进行交互的主要方法是通过它的then方法，该方法注册回调函数接受Promise的最终结果或Promise未完成的原因。 本规范详细说明了then方法的执行过程，所有遵循Promise&#x2F;A+实现的promise均可以本规范作为">
+  <meta charset="utf-8">
+  
+  
+  <title>Promise A+规范-译文 | Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Promises&#x2F;A+一个开源的、健全的、可操作的JavaScript Promises规范，由开发者制定，为其他开发者提供参考 Promise代表一个异步操作的最终结果。与之进行交互的主要方法是通过它的then方法，该方法注册回调函数接受Promise的最终结果或Promise未完成的原因。 本规范详细说明了then方法的执行过程，所有遵循Promise&#x2F;A+实现的promise均可以本规范作为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Promise A+规范-译文">
 <meta property="og:url" content="http://example.com/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/index.html">
@@ -35,215 +18,84 @@
 <meta property="article:author" content="lw384">
 <meta property="article:tag" content="promise">
 <meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="http://example.com/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/">
-
-
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-<title>Promise A+规范-译文 | Blog</title>
   
+    <link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
-  <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
     </div>
   </div>
+</header>
 
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Blog</h1>
-      <i class="logo-line"></i>
-    </a>
+      <div class="outer">
+        <section id="main"><article id="post-Promise-A-规范-译文" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/" class="article-date">
+  <time class="dt-published" datetime="2021-03-18T06:05:04.000Z" itemprop="datePublished">2021-03-18</time>
+</a>
+    
   </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-</div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Promises-A"><span class="nav-number">1.</span> <span class="nav-text">Promises&#x2F;A+</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.1.</span> <span class="nav-text">1. 术语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-promise"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 promise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-thenable"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 thenable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-value"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-exception"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 exception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-reason"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 reason</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">2.要求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Promise%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Promise的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-then%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 then方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Promise%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Promise解决过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B3%A8%E9%87%8A"><span class="nav-number">1.3.</span> <span class="nav-text">3 注释</span></a></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">lw384</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">3</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
-
-    
-  <div class="back-to-top" role="button">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
+    <h1 class="p-name article-title" itemprop="headline name">
+      Promise A+规范-译文
+    </h1>
   
 
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="lw384">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Promise A+规范-译文
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-03-18 14:05:04 / Modified: 17:06:28" itemprop="dateCreated datePublished" datetime="2021-03-18T14:05:04+08:00">2021-03-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
       </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
+      
         <h1 id="Promises-A"><a href="#Promises-A" class="headerlink" title="Promises/A+"></a>Promises/A+</h1><p><strong>一个开源的、健全的、可操作的JavaScript Promises规范，由开发者制定，为其他开发者提供参考</strong></p>
 <p><code>Promise</code>代表一个异步操作的最终结果。与之进行交互的主要方法是通过它的<code>then</code>方法，该方法注册回调函数接受<code>Promise</code>的最终结果或<code>Promise</code>未完成的原因。</p>
 <p>本规范详细说明了<code>then</code>方法的执行过程，所有遵循Promise/A+实现的promise均可以本规范作为参照。因此本规范是十分稳定的。虽然Promises/A+组织有时会通过向后兼容的小改动来修订这份规范，用于处理一些新发现的边界情况，但是只有经过仔细的思考、讨论与测试后，我们才会进行大规模不向下兼容的更新。</p>
@@ -324,96 +176,133 @@
 <p>如果promise被一个循环的thenable链中的thenable对象执行，而因为<code>[[Resolve]](promise, y)</code>的递归属性，使得<code>[[Resolve]](promise, y)</code>被再次调用，根据上述算法产生无限递归的情况。算法鼓励但不强制要求去检测这种递归情况是否存在，如果检测到这种情况存在，则以TypeError为原因拒绝执行[^3.6]。</p>
 <h2 id="3-注释"><a href="#3-注释" class="headerlink" title="3 注释"></a>3 注释</h2><p>[^3.1]: “plantform code”指的是引擎、环境、promise实施代码。实际中确保<code>onFulfilled</code>和<code>onRejected</code>异步执行，在then方法被调用的那一轮事件调用结束后使用新的栈。可以使用“macro-task”机制例如<code>setTimeout</code>或<code>setImmediate</code>或使用“micro-task”机制例如<code>MutationObserver</code>或<code>process.nextTick</code>执行。由于 promise 的实施代码本身就是”plantform code”（<strong>注：</strong>即都是 JavaScript），故代码自身在处理在处理程序时可能已经包含一个任务调度队列。<br>[^3.2]: 在严格模式下，<code>this</code>的值为<code>undefined</code>;在非严格模式下，<code>this</code>为全局对象。<br>[^3.3]: 代码实现在满足所有要求的情况下可以允许 <code>promise2 === promise1</code> 。每个实现都要说明其是否允许以及在何种条件下允许 <code>promise2 === promise1</code> 。<br>[^3.4]: 通常，若 <code>x</code> 符合当前实现，我们才认为它是真正的 <em>promise</em> 。这一规则允许那些特例实现采用符合已知要求的 Promises 状态。<br>[^3.5]: 该过程我们先存储了<code>x.then</code>的引用，然后测试这个引用，再调用该引用，避免了对x.then属性的多次访问。这种预防措施对于保护访问者属性的一致性非常重要，因为访问者属性值在两次检索期间可能发生变化。<br>[^3.6]: 实现不应该对thenable链进行深度的限制，并且假设超出深度限制的就是无限递归。只有真正的无限递归会抛出<code>TypeError</code>;如果是一条无限长的链上 <em>thenable</em> 均不相同，那么递归下去永远是正确的行为。</p>
 
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/" data-id="ckmjxrd7w00008gvb97mu4dsu" data-title="Promise A+规范-译文" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/promise/" rel="tag">promise</a></li></ul>
 
-    
-    
-    
-
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/promise/" rel="tag"># promise</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2021/03/15/canvas-%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E7%BB%98%E5%88%B6%E5%81%8F%E7%A7%BB%E9%97%AE%E9%A2%98/" rel="prev" title="canvas 实现手写签名中遇到的绘制偏移问题">
-                  <i class="fa fa-chevron-left"></i> canvas 实现手写签名中遇到的绘制偏移问题
-                </a>
-            </div>
-            <div class="post-nav-item">
-            </div>
-          </div>
     </footer>
-  </article>
-</div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/15/canvas-%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E7%BB%98%E5%88%B6%E5%81%8F%E7%A7%BB%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">canvas 实现手写签名中遇到的绘制偏移问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 
+</section>
+        
+          <aside id="sidebar">
+  
+    
 
-
-
-
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">lw384</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/promise/" rel="tag">promise</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tips/" rel="tag">tips</a></li></ul>
+    </div>
   </div>
 
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/promise/" style="font-size: 10px;">promise</a> <a href="/tags/tips/" style="font-size: 10px;">tips</a>
     </div>
-  </footer>
+  </div>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li></ul>
+    </div>
+  </div>
+
 
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/Promise-A-%E8%A7%84%E8%8C%83-%E8%AF%91%E6%96%87/">Promise A+规范-译文</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/15/canvas-%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E7%AD%BE%E5%90%8D%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E7%BB%98%E5%88%B6%E5%81%8F%E7%A7%BB%E9%97%AE%E9%A2%98/">canvas 实现手写签名中遇到的绘制偏移问题</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/23/eventloop/">eventloop</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 lw384<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
 
-
+<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
   
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
 
 
 
 
 
+  </div>
 </body>
 </html>

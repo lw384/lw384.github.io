@@ -98,7 +98,13 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: typography
+theme: hexo-theme-typography
+plugin:
+  - hexo-generator-category-enhance
+  - hexo-generator-feed
+  - hexo-asset-image
+  - hexo-prism-plugin
+  - hexo-toc
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
